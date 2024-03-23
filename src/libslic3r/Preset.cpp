@@ -467,7 +467,7 @@ void Preset::set_visible_from_appconfig(const AppConfig &app_config)
 	    	for (auto it = this->renamed_from.begin(); ! is_visible && it != this->renamed_from.end(); ++ it)
 	    		is_visible = has(*it);
 	    }
-        else 
+        else
 			is_visible = false;
     }
 }
@@ -1182,7 +1182,7 @@ void PresetCollection::add_default_preset(const std::vector<std::string> &keys, 
 // Load all presets found in dir_path.
 // Throws an exception on error.
 void PresetCollection::load_presets(
-    const std::string &dir_path, const std::string &subdir, 
+    const std::string &dir_path, const std::string &subdir,
     PresetsConfigSubstitutions& substitutions, ForwardCompatibilitySubstitutionRule substitution_rule)
 {
     // Don't use boost::filesystem::canonical() on Windows, it is broken in regard to reparse points,
@@ -1341,9 +1341,9 @@ ExternalPreset PresetCollection::load_external_preset(
             if (!profile_print_params_same(it->config, cfg)) {
                 // The source config may contain keys from many possible preset types. Just copy those that relate to this preset.
 
-                // Following keys are not used neither by the UI nor by the slicing core, therefore they are not important 
+                // Following keys are not used neither by the UI nor by the slicing core, therefore they are not important
                 // Erase them from config apply to avoid redundant "dirty" parameter in loaded preset.
-                for (const char* key : { "print_settings_id", "filament_settings_id", "sla_print_settings_id", "sla_material_settings_id", "printer_settings_id", "filament_vendor", 
+                for (const char* key : { "print_settings_id", "filament_settings_id", "sla_print_settings_id", "sla_material_settings_id", "printer_settings_id", "filament_vendor",
                                          "print_settings_modified", "filament_settings_modified", "sla_print_settings_modified", "sla_material_settings_modified", "printer_settings_modified",
                                          "printer_model", "printer_variant", "default_print_profile", "default_filament_profile", "default_sla_print_profile", "default_sla_material_profile" })
                     keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
@@ -1774,7 +1774,7 @@ size_t PresetCollection::update_compatible_internal(const PresetWithVendorProfil
             }
         }
     }
-    
+
     // Update visibility of the default profiles here if the defaults are suppressed, the current profile is not compatible and we don't want to select another compatible profile.
     if (m_idx_selected >= m_num_default_presets && m_default_suppressed)
 	    for (size_t i = 0; i < m_num_default_presets; ++ i)
@@ -1872,7 +1872,7 @@ inline t_config_option_keys deep_diff(const ConfigBase &config_this, const Confi
                 // "nozzle_diameter" is a vector option which contain info about diameter for each nozzle
                 // But in the same time size of this vector indicates about count of extruders,
                 // So, we need to add it to the diff if its size is changed.
-                if (opt_key == "nozzle_diameter" && 
+                if (opt_key == "nozzle_diameter" &&
                     static_cast<const ConfigOptionFloats*>(this_opt)->size() != static_cast<const ConfigOptionFloats*>(other_opt)->size())
                     diff.emplace_back(opt_key);
                 if (opt_key == "milling_diameter" && 
@@ -2373,7 +2373,7 @@ static void update_preset_names_if_were_renamed(std::set<std::string>& preset_na
 // Load all printers found in dir_path.
 // Throws an exception on error.
 void PhysicalPrinterCollection::load_printers(
-    const std::string& dir_path, const std::string& subdir, 
+    const std::string& dir_path, const std::string& subdir,
     PresetsConfigSubstitutions& substitutions, ForwardCompatibilitySubstitutionRule substitution_rule)
 {
     // Don't use boost::filesystem::canonical() on Windows, it is broken in regard to reparse points,
@@ -2807,7 +2807,7 @@ size_t ExtruderFilaments::update_compatible_internal(const PresetWithVendorProfi
         config.set_key_value("milling_count", new ConfigOptionInt((int) static_cast<const ConfigOptionFloats *>(opt)->size()));
     }
 
-    // Adjust printer preset config to the first extruder from m_extruder_id 
+    // Adjust printer preset config to the first extruder from m_extruder_id
     Preset printer_preset_adjusted = active_printer.preset;
     if (m_extruder_id > 0 && !printer_preset_adjusted.config.opt_bool("single_extruder_multi_material")) {
         DynamicPrintConfig& active_printer_config = printer_preset_adjusted.config;

@@ -143,6 +143,7 @@ static const t_config_enum_values s_keys_map_PrintHostType {
     {"mpmdv2",          htMPMDv2},
     { "mks",            htMKS },
     {"monoprice",       htMiniDeltaLCD },
+    { "simplyprint",    htSimplyPrint },
 };
 CONFIG_OPTION_ENUM_DEFINE_STATIC_MAPS(PrintHostType)
 
@@ -556,7 +557,7 @@ void PrintConfigDef::init_common_params()
     def->mode = comAdvancedE | comPrusa;
     def->cli = ConfigOptionDef::nocli;
     def->set_default_value(new ConfigOptionString(""));
-    
+
     // for repetier
     def = this->add("printhost_port", coString);
     def->label = L("Printer");
@@ -565,7 +566,7 @@ void PrintConfigDef::init_common_params()
     def->cli = ConfigOptionDef::nocli;
     def->set_enum_values(ConfigOptionDef::GUIType::select_open, {"no printers"});
     def->set_default_value(new ConfigOptionString(""));
-    
+
     // only if there isn't a native SSL support
     def = this->add("printhost_cafile", coString);
     def->label = L("HTTPS CA File");
@@ -616,7 +617,7 @@ void PrintConfigDef::init_common_params()
     def->mode = comAdvancedE | comPrusa;
     def->cli = ConfigOptionDef::nocli;
     def->set_default_value(new ConfigOptionBool(false));
-    
+
     def = this->add("preset_names", coStrings);
     def->label = L("Printer preset names");
     def->tooltip = L("Names of presets related to the physical printer");
@@ -1101,7 +1102,7 @@ void PrintConfigDef::init_fff_params()
         { "no_brim",         L("No brim") },
         { "outer_only",      L("Outer brim only") },
         { "inner_only",      L("Inner brim only") },
-        { "outer_and_inner", L("Outer and inner brim") } 
+        { "outer_and_inner", L("Outer and inner brim") }
     });
     def->mode = comSimpleAE | comPrusa;
     def->set_default_value(new ConfigOptionEnum<BrimType>(btOuterOnly));
@@ -1750,7 +1751,7 @@ void PrintConfigDef::init_fff_params()
         "This value overrides perimeter and infill extruders, but not the support extruders.");
     def->mode = comAdvancedE | comPrusa; // note: hidden setting
     def->min = 0;  // 0 = inherit defaults
-    def->set_enum_labels(ConfigOptionDef::GUIType::i_enum_open, 
+    def->set_enum_labels(ConfigOptionDef::GUIType::i_enum_open,
         { L("default"), "1", "2", "3", "4", "5", "6", "7", "8", "9" }); // override label for item 0
 
 
@@ -2364,11 +2365,11 @@ void PrintConfigDef::init_fff_params()
     def->tooltip = L("The filament material type for use in custom G-codes.");
     def->gui_flags = "show_value";
     def->set_enum_values(ConfigOptionDef::GUIType::select_open, {
-        "PLA", 
+        "PLA",
         "PET",
         "ABS",
         "ASA",
-        "FLEX", 
+        "FLEX",
         "HIPS",
         "EDGE",
         "NGEN",
@@ -2541,7 +2542,7 @@ void PrintConfigDef::init_fff_params()
         { "rectilinear",        L("Rectilinear") },
         { "alignedrectilinear", L("Aligned Rectilinear") },
         { "monotonic",          L("Monotonic") },
-        { "grid",               L("Grid") }, 
+        { "grid",               L("Grid") },
         { "triangles",          L("Triangles")},
         { "stars",              L("Stars")},
         { "cubic",              L("Cubic")},
@@ -4161,6 +4162,7 @@ void PrintConfigDef::init_fff_params()
         { "mpmdv2",         "MPMDv2" },
         { "mks",            "MKS" },
         { "monoprice",      "Monoprice lcd" },
+        { "simplyprint",    "SimplyPrint" }
     });
     def->mode = comAdvancedE | comPrusa;
     def->cli = ConfigOptionDef::nocli;
@@ -6325,7 +6327,7 @@ void PrintConfigDef::init_fff_params()
         "object scarring."
         "\nOrganic: create tree support structure, but this algorithm force to synchronize the support layers with object layers, and only allow for one layer height for each object.");
     def->set_enum<SupportMaterialStyle>({
-        { "grid", L("Grid") }, 
+        { "grid", L("Grid") },
         { "snug", L("Snug") },
         { "organic", L("Organic") }
     });
@@ -6438,10 +6440,10 @@ void PrintConfigDef::init_fff_params()
     def->set_default_value(new ConfigOptionFloat(3));
 
     // Tree Support Branch Distance
-    // How far apart the branches need to be when they touch the model. Making this distance small will cause 
+    // How far apart the branches need to be when they touch the model. Making this distance small will cause
     // the tree support to touch the model at more points, causing better overhang but making support harder to remove.
     def = this->add("support_tree_branch_distance", coFloat);
-    // TRN PrintSettings: #lmFIXME 
+    // TRN PrintSettings: #lmFIXME
     def->label = L("Branch Distance");
     def->category = OptionCategory::support;
     // TRN PrintSettings: "Organic supports" > "Branch Distance"
@@ -7783,7 +7785,7 @@ void PrintConfigDef::init_sla_support_params(const std::string &prefix)
     def->label = L("Pillar widening factor");
     def->category = OptionCategory::support;
 
-    def->tooltip  = 
+    def->tooltip  =
         L("Merging bridges or pillars into another pillars can "
         "increase the radius. Zero means no increase, one means "
         "full increase. The exact amount of increase is unspecified and can "
@@ -8023,7 +8025,7 @@ void PrintConfigDef::init_sla_params()
                       "to the sign of the correction.");
     def->mode = comExpert | comPrusa;
     def->set_default_value(new ConfigOptionFloat(0.0));
-    
+
     def = this->add("elephant_foot_min_width", coFloat);
     def->label = L("minimum width");
     def->category = OptionCategory::slicing;
@@ -8195,7 +8197,7 @@ void PrintConfigDef::init_sla_params()
     def->full_width = true;
     def->height = 13;
     // TODO currently notes are the only way to pass data
-    // for non-PrusaResearch printers. We therefore need to always show them 
+    // for non-PrusaResearch printers. We therefore need to always show them
     def->mode = comSimpleAE | comPrusa;
     def->set_default_value(new ConfigOptionString(""));
 
@@ -8310,7 +8312,7 @@ void PrintConfigDef::init_sla_params()
     def->max = 30;
     def->mode = comExpert | comPrusa;
     def->set_default_value(new ConfigOptionFloat(0.));
-    
+
     def = this->add("pad_brim_size", coFloat);
     def->label = L("Pad brim size");
     def->tooltip = L("How far should the pad extend around the contained geometry");
@@ -8361,7 +8363,7 @@ void PrintConfigDef::init_sla_params()
     def->tooltip = L("Create pad around object and ignore the support elevation");
     def->mode = comSimpleAE | comPrusa;
     def->set_default_value(new ConfigOptionBool(false));
-    
+
     def = this->add("pad_around_object_everywhere", coBool);
     def->label = L("Pad around object everywhere");
     def->category = OptionCategory::pad;
@@ -8407,14 +8409,14 @@ void PrintConfigDef::init_sla_params()
     def->min = 0;
     def->mode = comExpert | comPrusa;
     def->set_default_value(new ConfigOptionFloat(0.3));
-    
+
     def = this->add("hollowing_enable", coBool);
     def->label = L("Enable hollowing");
     def->category = OptionCategory::hollowing;
     def->tooltip = L("Hollow out a model to have an empty interior");
     def->mode = comSimpleAE | comPrusa;
     def->set_default_value(new ConfigOptionBool(false));
-    
+
     def = this->add("hollowing_min_thickness", coFloat);
     def->label = L("Wall thickness");
     def->category = OptionCategory::hollowing;
@@ -8424,7 +8426,7 @@ void PrintConfigDef::init_sla_params()
     def->max = 10;
     def->mode = comSimpleAE | comPrusa;
     def->set_default_value(new ConfigOptionFloat(3.));
-    
+
     def = this->add("hollowing_quality", coFloat);
     def->label = L("Accuracy");
     def->category = OptionCategory::hollowing;
@@ -8433,7 +8435,7 @@ void PrintConfigDef::init_sla_params()
     def->max = 1;
     def->mode = comExpert | comPrusa;
     def->set_default_value(new ConfigOptionFloat(0.5));
-    
+
     def = this->add("hollowing_closing_distance", coFloat);
     def->label = L("Closing distance");
     def->category = OptionCategory::hollowing;
@@ -11465,7 +11467,7 @@ std::string validate(const FullPrintConfig& cfg)
         return ret; \
     }
 PRINT_CONFIG_CACHE_INITIALIZE((
-    PrintObjectConfig, PrintRegionConfig, MachineEnvelopeConfig, GCodeConfig, PrintConfig, FullPrintConfig, 
+    PrintObjectConfig, PrintRegionConfig, MachineEnvelopeConfig, GCodeConfig, PrintConfig, FullPrintConfig,
     SLAMaterialConfig, SLAPrintConfig, SLAPrintObjectConfig, SLAPrinterConfig, SLAFullPrintConfig))
 static int print_config_static_initialized = print_config_static_initializer();
 
@@ -11829,7 +11831,7 @@ PrintStatisticsConfigDef::PrintStatisticsConfigDef()
     def = this->add("normal_print_time", coString);
     def->label = L("Print time (normal mode)");
     def->tooltip = L("Estimated print time when printed in normal mode (i.e. not in silent mode). Same as print_time.");
-    
+
     def = this->add("num_printing_extruders", coInt);
     def->label = L("Number of printing extruders");
     def->tooltip = L("Number of extruders used during the print.");
@@ -12110,22 +12112,22 @@ static Points to_points(const std::vector<Vec2d> &dpts)
     Points pts; pts.reserve(dpts.size());
     for (auto &v : dpts)
         pts.emplace_back( coord_t(scale_(v.x())), coord_t(scale_(v.y())) );
-    return pts;    
+    return pts;
 }
 
 Points get_bed_shape(const DynamicPrintConfig &config)
 {
     const auto *bed_shape_opt = config.opt<ConfigOptionPoints>("bed_shape");
     if (!bed_shape_opt) {
-        
+
         // Here, it is certain that the bed shape is missing, so an infinite one
         // has to be used, but still, the center of bed can be queried
         if (auto center_opt = config.opt<ConfigOptionPoint>("center"))
             return { scaled(center_opt->value) };
-        
+
         return {};
     }
-    
+
     return to_points(bed_shape_opt->get_values());
 }
 
