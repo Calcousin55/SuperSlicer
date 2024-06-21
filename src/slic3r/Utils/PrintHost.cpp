@@ -33,6 +33,7 @@
 #include "Moonraker.hpp"
 #include "SimplyPrint.hpp"
 #include "../GUI/PrintHostDialogs.hpp"
+#include "../GUI/MainFrame.hpp"
 #include "../GUI/GUI.hpp"
 #include "slic3r/GUI/I18N.hpp"
 
