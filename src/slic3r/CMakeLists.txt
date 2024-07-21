@@ -247,6 +247,7 @@ set(SLIC3R_GUI_SOURCES
     GUI/Jobs/BusyCursorJob.hpp
     GUI/Jobs/CancellableJob.hpp
     GUI/Jobs/PlaterWorker.hpp
+    GUI/Jobs/WindowWorker.hpp
     GUI/Jobs/ArrangeJob2.hpp
     GUI/Jobs/ArrangeJob2.cpp
     GUI/Jobs/CreateFontNameImageJob.cpp
