@@ -38,7 +38,7 @@
 #include "BonjourDialog.hpp"
 #include "MsgDialog.hpp"
 #include "OAuthDialog.hpp"
-#include "SimplyPrint.hpp"
+#include "../Utils/SimplyPrint.hpp"
 
 namespace Slic3r {
 namespace GUI {
@@ -651,7 +651,6 @@ void PhysicalPrinterDialog::update(bool printer_change)
         const auto opt = m_config->option<ConfigOptionEnum<PrintHostType>>("host_type");
         m_optgroup->show_field("host_type");
 
-        if(opt && opt->value == htPrusaLink
         m_optgroup->enable_field("print_host");
         m_optgroup->enable_field("printhost_cafile");
         m_optgroup->enable_field("printhost_ssl_ignore_revoke");
@@ -660,11 +659,14 @@ void PhysicalPrinterDialog::update(bool printer_change)
 
         // hide pre-configured address, in case user switched to a different host type
         if (Field* printhost_field = m_optgroup->get_field("print_host"); printhost_field) {
-            if (wxTextCtrl* temp = dynamic_cast<TextCtrl*>(printhost_field)->text_ctrl(); temp) {
-                const auto current_host = temp->GetValue();
-                if (current_host == "https://simplyprint.io" || current_host == "https://simplyprint.io/panel") {
-                    temp->SetValue(wxString());
-                }
+            boost::any text_value = printhost_field->get_value();
+            if (!text_value.empty()) {
+                try {
+                    const std::string current_host = boost::any_cast<std::string>(text_value);
+                    if (current_host == "https://simplyprint.io" || current_host == "https://simplyprint.io/panel") {
+                        printhost_field->set_any_value(std::string(), false);
+                    }
+                } catch (std::exception) { assert(false); }
             }
         }
         if (opt && opt->value == htPrusaLink) { // PrusaConnect does NOT allow http digest

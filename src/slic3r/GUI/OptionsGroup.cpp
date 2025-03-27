@@ -249,7 +249,7 @@ void OptionsGroup::show_field(const t_config_option_key& opt_key, bool show/* = 
 void OptionsGroup::enable_field(const t_config_option_key& opt_key, bool enable)
 {
     if (Field* f = get_field(opt_key); f) {
-        f->toggle(enable);
+        f->toggle_widget_enable(enable);
     }
 }
 

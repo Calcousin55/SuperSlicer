@@ -1,7 +1,12 @@
 #include "SimplyPrint.hpp"
 
-#include <openssl/sha.h>
+//#include <openssl/sha.h>
 #include <boost/beast/core/detail/base64.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/nowide/fstream.hpp>
+#include <boost/nowide/cstdio.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem/operations.hpp>
 
 #include "nlohmann/json.hpp"
 #include "libslic3r/Utils.hpp"
@@ -50,22 +55,23 @@ static std::string generate_verification_code(int code_length = 32)
 
 static std::string sha256b64(const std::string& inputStr)
 {
-    unsigned char        hash[SHA256_DIGEST_LENGTH];
-    const unsigned char* data = (const unsigned char*) inputStr.c_str();
-    SHA256(data, inputStr.size(), hash);
-
-    std::string b64;
-    b64.resize(boost::beast::detail::base64::encoded_size(sizeof(hash)));
-    b64.resize(boost::beast::detail::base64::encode(&b64[0], hash, sizeof(hash)));
-
-    // uses '-' instead of '+' and '_' instead of '/' for url-safe
-    std::replace(b64.begin(), b64.end(), '+', '-');
-    std::replace(b64.begin(), b64.end(), '/', '_');
-
-    // Stripping "=" is for RFC 7636 compliance
-    b64.erase(std::remove(b64.begin(), b64.end(), '='), b64.end());
-
-    return b64;
+//    unsigned char        hash[SHA256_DIGEST_LENGTH];
+//    const unsigned char* data = (const unsigned char*) inputStr.c_str();
+//    SHA256(data, inputStr.size(), hash);
+//
+//    std::string b64;
+//    b64.resize(boost::beast::detail::base64::encoded_size(sizeof(hash)));
+//    b64.resize(boost::beast::detail::base64::encode(&b64[0], hash, sizeof(hash)));
+//
+//    // uses '-' instead of '+' and '_' instead of '/' for url-safe
+//    std::replace(b64.begin(), b64.end(), '+', '-');
+//    std::replace(b64.begin(), b64.end(), '/', '_');
+//
+//    // Stripping "=" is for RFC 7636 compliance
+//    b64.erase(std::remove(b64.begin(), b64.end(), '='), b64.end());
+//
+//    return b64;
+    return "";
 }
 
 static std::string url_encode(const std::vector<std::pair<std::string, std::string>> query)
