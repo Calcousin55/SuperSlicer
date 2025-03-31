@@ -73,6 +73,9 @@ then
     exit -1
 fi
 
+BUILD_ARCH="x86_64"
+BUILD_ARCH_x86="x86_64"
+
 while getopts ":idaxbhcsltwrv" opt; do
   case ${opt} in
     i )
@@ -304,6 +307,7 @@ then
 
     # cmake
     pushd build > /dev/null
+    # note: why 10.14 while deps are for 10.15??? fix it?
     cmake .. -DCMAKE_PREFIX_PATH="$PWD/../deps/build/destdir/usr/local" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DSLIC3R_STATIC=1 ${BUILD_ARGS}
     if [ $? -eq 0 ]
     then
@@ -360,7 +364,7 @@ then
     chmod 755 $ROOT/build/src/BuildMacOSImage.sh
     pushd build  > /dev/null
     echo "> $ROOT/build/src/BuildMacOSImage.sh -i ${BUILD_IMG_ARCH}"
-    if [[ -n "$BUILD_DOWNLOAD_DEP" ]]
+    if [[ "$BUILD_ARCH" == "$BUILD_ARCH_x86" ]]
     then
         $ROOT/build/src/BuildMacOSImage.sh -i $BUILD_IMG_ARCH
     else
