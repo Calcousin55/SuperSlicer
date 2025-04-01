@@ -64,9 +64,15 @@ function check_operating_system() {
         if [ $(uname -m) == "x86_64" ]; then
             echo -e "$(tput setaf 2)Linux 64-bit found$(tput sgr0)\n"
             Processor="64"
+            arch="x86"
         elif [[ $(uname -m) == "i386" || $(uname -m) == "i686" ]]; then
             echo "$(tput setaf 2)Linux 32-bit found$(tput sgr0)\n"
             Processor="32"
+            arch="x86"
+        elif [[ $(uname -m) == "aarch64" ]]; then
+            echo "$(tput setaf 2)Linux arm 64-bit found$(tput sgr0)\n"
+            Processor="64"
+            arch="arm"
         else
             echo "$(tput setaf 1)Unsupported OS: Linux $(uname -m)"
             exit -1
