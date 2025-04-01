@@ -197,7 +197,7 @@ ZSDT_PATH=$(ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1)
 echo "get sdk of "$ZSDT_PATH
 vtool -show-build $ZSDT_PATH
 vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/'
-SDKVER=vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/'
+SDKVER=$(vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/')
 GOODVER="13.3"
 if [[ "$BUILD_ARCH" == "$GOODVER" ]]
 then
@@ -223,6 +223,7 @@ else
     echo "bad ver '"$SDKVER"' == "$GOODVER
 echo "end"
 
+SDKVER=vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/'
 # Iconv: /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libiconv.tbd
 echo "\nbrew --prefix libiconv:\n"
 brew --prefix libiconv
