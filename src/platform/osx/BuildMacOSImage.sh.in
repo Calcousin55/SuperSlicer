@@ -109,6 +109,8 @@ done
         echo "zstd var:'"$ZSDT_PATH"' : "$ZSTD_FILE;
         echo "otool -L $ZSTD_FILE:"
         otool -L $ZSDT_PATH
+        echo "vtool -show-build"
+        vtool -show-build $ZSDT_PATH
         #copy libzstd
         if [[ -n "$INCLUDE_LIBZSTD" ]]
         then

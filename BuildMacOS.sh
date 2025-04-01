@@ -154,14 +154,20 @@ fi
 echo "Build architecture: ${BUILD_ARCH}"
 echo "Build IMG_ARCH=${BUILD_IMG_ARCH}\n"
 
-echo "\n/Applications:\n"
+echo "\nls /Applications:\n"
 ls /Applications
-echo "\n/Applications/Xcode_13.2.1.app:\n"
-ls /Applications/Xcode_13.2.1.app
-echo "\n/Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs:\n"
-ls /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
-echo "\n/Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib:\n"
-ls /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib
+echo "\nnls /Applications/Xcode_14.3.1.app:\n"
+ls /Applications/Xcode_14.3.1.app
+echo "\nnls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs:\n"
+ls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+echo "\nnls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.3.sdk/usr/lib:\n"
+ls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.3.sdk/usr/lib
+echo "\nnls /Applications/Xcode_15.2.0.app:\n"
+ls /Applications/Xcode_15.2.0.app
+echo "\nnls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs:\n"
+ls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+echo "\nnls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib:\n"
+ls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib
 
 # Iconv: /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libiconv.tbd
 echo "\nbrew --prefix libiconv:\n"
@@ -223,9 +229,9 @@ then
         BUILD_ARGS="${BUILD_ARGS} -DCMAKE_BUILD_TYPE=Debug"
     fi
     # cmake deps
-    echo "Cmake command: cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET=\"10.15\" ${BUILD_ARCH} "
+    echo "Cmake command: cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET=\"10.14\" ${BUILD_ARCH} "
     pushd deps/build > /dev/null
-    cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" $BUILD_ARGS
+    cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" $BUILD_ARGS
     if [ $? -eq 0 ]
     then
         echo -e "\n ... done\n"
