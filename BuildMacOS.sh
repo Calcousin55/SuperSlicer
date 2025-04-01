@@ -185,12 +185,12 @@ if [[ "$BUILD_ARCH" == "$BUILD_ARCH_x86" ]]
 then
     echo "Switch to xcode Xcode_14.3.1"
     sudo xcode-select -s /Applications/Xcode_14.3.1.app/Contents/Developer
-    mv /Applications/Xcode_15.0.1.app/Applications/NO_Xcode_15.0.1.app
-    mv /Applications/Xcode_15.0.app/Applications/NO_Xcode_15.0.app
-    mv /Applications/Xcode_15.1.0.app/Applications/NO_Xcode_15.1.0.app
-    mv /Applications/Xcode_15.1.app/Applications/NO_Xcode_15.1.app
-    mv /Applications/Xcode_15.2.0.app/Applications/NO_Xcode_15.2.0.app
-    mv /Applications/Xcode_15.2.app/Applications/NO_Xcode_15.2.app
+    sudo mv -f /Applications/Xcode_15.0.1.app /Applications/NO_Xcode_15.0.1.app
+    sudo mv -f /Applications/Xcode_15.0.app /Applications/NO_Xcode_15.0.app
+    sudo mv -f /Applications/Xcode_15.1.0.app Applications/NO_Xcode_15.1.0.app
+    sudo mv -f /Applications/Xcode_15.1.app /Applications/NO_Xcode_15.1.app
+    sudo mv -f /Applications/Xcode_15.2.0.app /Applications/NO_Xcode_15.2.0.app
+    sudo mvv /Applications/Xcode_15.2.app /Applications/NO_Xcode_15.2.app
 fi
 
 # Iconv: /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libiconv.tbd
