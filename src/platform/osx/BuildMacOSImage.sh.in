@@ -85,31 +85,35 @@ done
         otool -L pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/MacOS/@SLIC3R_APP_KEY@
         echo "END otool"
         
+        ZSDT_PATH=
+        echo "libzstd:"
+        echo "ls -al /opt/homebrew/opt/zstd/lib/libzstd*.dylib:"
+        ls -al /opt/homebrew/opt/zstd/lib/libzstd*.dylib
+        echo "ls -al /usr/local/opt/zstd/lib/libzstd*.dylib:"
+        ls -al /usr/local/opt/zstd/lib/libzstd*.dylib
+        echo "ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib:"
+        ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib
+        echo "ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1:"
+        ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1
+        ZSDT_PATH=$(ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1)
+        if [ -z "${ZSDT_PATH}" ]
+        then
+            echo "ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib:"
+            ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib
+            echo "ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1:"
+            ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1
+            # try with homebrew
+            ZSDT_PATH=$(ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1)
+        fi
+        ZSTD_FILE=$(basename ${ZSDT_PATH})
+        echo "zstd var:'"$ZSDT_PATH"' : "$ZSTD_FILE;
+        echo "otool -L $ZSTD_FILE:"
+        otool -L $ZSDT_PATH
+        echo "vtool -show-build"
+        vtool -show-build $ZSDT_PATH
         #copy libzstd
         if [[ -n "$INCLUDE_LIBZSTD" ]]
         then
-            ZSDT_PATH=
-            echo "libzstd:"
-            echo "ls -al /opt/homebrew/opt/zstd/lib/libzstd*.dylib:"
-            ls -al /opt/homebrew/opt/zstd/lib/libzstd*.dylib
-            echo "ls -al /usr/local/opt/zstd/lib/libzstd*.dylib:"
-            ls -al /usr/local/opt/zstd/lib/libzstd*.dylib
-            echo "ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib:"
-            ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib
-            echo "ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1:"
-            ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1
-            ZSDT_PATH=$(ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1)
-            if [ -z "${ZSDT_PATH}" ]
-            then
-                echo "ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib:"
-                ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib
-                echo "ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1:"
-                ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1
-                # try with homebrew
-                ZSDT_PATH=$(ls -v /opt/homebrew/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1)
-            fi
-            ZSTD_FILE=$(basename ${ZSDT_PATH})
-            echo "zstd var:'"$ZSDT_PATH"' : "$ZSTD_FILE;
             cp $ZSDT_PATH pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/Frameworks/$ZSTD_FILE
             ls -al pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/Frameworks/
             if [[ -n "$ZSDT_PATH" ]]
