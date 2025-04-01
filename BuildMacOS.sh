@@ -199,29 +199,30 @@ vtool -show-build $ZSDT_PATH
 vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/'
 SDKVER=$(vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/')
 GOODVER="13.3"
-if [[ "$BUILD_ARCH" == "$GOODVER" ]]
+echo "ver '"$SDKVER"' == "$GOODVER
+if [[ "$SDKVER" == "$GOODVER" ]]
 then
     echo "good ver '"$SDKVER"' == "$GOODVER
 else
     echo "bad ver '"$SDKVER"' == "$GOODVER
-echo "end"
+fi
 GOODVER="14.2"
-if [[ "$BUILD_ARCH" == "$GOODVER" ]]
+if [[ "$SDKVER" == "$GOODVER" ]]
 then
     echo "good ver '"$SDKVER"' == "$GOODVER
 else
     echo "bad ver '"$SDKVER"' == "$GOODVER
-echo "end"
+fi
 
 vtool -set-build-version macos 14.2 14.2 -replace -output $ZSDT_PATH $ZSDT_PATH
 echo "vtool -show-build zstd"
 vtool -show-build $ZSDT_PATH
-if [[ "$BUILD_ARCH" == "$GOODVER" ]]
+if [[ "$SDKVER" == "$GOODVER" ]]
 then
     echo "good ver '"$SDKVER"' == "$GOODVER
 else
     echo "bad ver '"$SDKVER"' == "$GOODVER
-echo "end"
+fi
 
 SDKVER=vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/'
 # Iconv: /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libiconv.tbd
