@@ -161,13 +161,13 @@ ls /Applications/Xcode_14.3.1.app
 echo "\nnls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs:\n"
 ls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 echo "\nnls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.3.sdk/usr/lib:\n"
-ls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.3.sdk/usr/lib
+ls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/usr/lib
 echo "\nnls /Applications/Xcode_15.2.0.app:\n"
 ls /Applications/Xcode_15.2.0.app
 echo "\nnls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs:\n"
 ls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 echo "\nnls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib:\n"
-ls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib
+ls /Applications/Xcode_15.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/lib
 
 # Iconv: /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libiconv.tbd
 echo "\nbrew --prefix libiconv:\n"

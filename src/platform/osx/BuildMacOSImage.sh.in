@@ -109,8 +109,10 @@ done
         echo "zstd var:'"$ZSDT_PATH"' : "$ZSTD_FILE;
         echo "otool -L $ZSTD_FILE:"
         otool -L $ZSDT_PATH
-        echo "vtool -show-build"
+        echo "vtool -show-build zstd"
         vtool -show-build $ZSDT_PATH
+        echo "vtool -show-build slic3r"
+        vtool -show-build pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/MacOS/@SLIC3R_APP_KEY@
         #copy libzstd
         if [[ -n "$INCLUDE_LIBZSTD" ]]
         then
