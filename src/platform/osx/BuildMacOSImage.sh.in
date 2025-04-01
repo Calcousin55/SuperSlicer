@@ -126,7 +126,7 @@ done
         tool -show-build $ZSDT_PATH | sed -r 's/.*sdk ([0-9.]*)\..*/\1/g'
         # if version different
         echo "vtool -set-build-versio"
-        vtool -set-build-version MACOS 14.2 14.2 -replace -output $ZSDT_PATH $ZSDT_PATH
+        vtool -set-build-version macos 14.2 14.2 -replace -output $ZSDT_PATH $ZSDT_PATH
         echo "vtool -show-build zstd"
         vtool -show-build $ZSDT_PATH
         #copy libzstd
