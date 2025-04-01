@@ -13,6 +13,7 @@
 
 export OS_NAME="macOS"
 VERSION_NUMBER=""
+OS_ARM_NAME="macOS-arm"
 while getopts ":ixavhz" opt; do
   case ${opt} in
     i )
@@ -46,6 +47,13 @@ done
         # update Info.plist
         pushd src
         sed "s/+UNKNOWN/_$(date '+%F')/" Info.plist >Info.date.plist
+        # TODO: get the version directly, or do it int he caller. that is disgutingly bad practice
+        if [[ "$OS_NAME" == "$OS_ARM_NAME" ]]
+        then
+            sed "s/10.13/10.14/" Info.date.plist > Info.final.plist
+        else
+            mv Info.date.plist Info.final.plist
+        fi
         popd
 
         # create directory and copy into it
@@ -64,7 +72,7 @@ done
         # copy Resources
         cp -Rf ../resources pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/Resources
         cp pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/Resources/icons/@SLIC3R_APP_KEY@.icns pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/resources/@SLIC3R_APP_KEY@.icns
-        cp src/Info.date.plist pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/Info.plist
+        cp src/Info.final.plist pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/Info.plist
         echo -n -e 'APPL????\x0a' > PkgInfo
         cp PkgInfo pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/PkgInfo
         # remove unneeded po from resources
@@ -84,6 +92,8 @@ done
         echo "otool -L exefile:"
         otool -L pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/MacOS/@SLIC3R_APP_KEY@
         echo "END otool"
+        otool -l pack/@SLIC3R_APP_KEY@/@SLIC3R_APP_KEY@.app/Contents/MacOS/@SLIC3R_APP_KEY@
+        echo "END otool2"
         
         ZSDT_PATH=
         echo "libzstd:"
