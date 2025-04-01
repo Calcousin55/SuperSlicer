@@ -196,10 +196,12 @@ echo "get ZSDT_PATH"
 ZSDT_PATH=$(ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1)
 echo "get sdk of "$ZSDT_PATH
 vtool -show-build $ZSDT_PATH
-vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/'
-SDKVER=$(vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/')
+vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9]\+\.[0-9]\+\) .*/\1/'
+SDKVER=$(vtool -show-build $ZSDT_PATH)
+echo "ver0 '"$SDKVER"'"
+SDKVER=$(vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9]\+\.[0-9]\+\) .*/\1/')
 GOODVER="13.3"
-echo "ver '"$SDKVER"' == "$GOODVER
+echo "ver1 '"$SDKVER"' == "$GOODVER
 if [[ "$SDKVER" == "$GOODVER" ]]
 then
     echo "good ver '"$SDKVER"' == "$GOODVER
@@ -214,17 +216,6 @@ else
     echo "bad ver '"$SDKVER"' == "$GOODVER
 fi
 
-vtool -set-build-version macos 14.2 14.2 -replace -output $ZSDT_PATH $ZSDT_PATH
-echo "vtool -show-build zstd"
-vtool -show-build $ZSDT_PATH
-if [[ "$SDKVER" == "$GOODVER" ]]
-then
-    echo "good ver '"$SDKVER"' == "$GOODVER
-else
-    echo "bad ver '"$SDKVER"' == "$GOODVER
-fi
-
-SDKVER=vtool -show-build $ZSDT_PATH | sed 's/.* \([0-9\.]*\)$/\1/'
 # Iconv: /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libiconv.tbd
 echo "\nbrew --prefix libiconv:\n"
 brew --prefix libiconv
