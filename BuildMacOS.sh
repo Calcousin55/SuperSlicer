@@ -181,17 +181,22 @@ ls /Applications/Xcode_16.2.0.app/Contents/Developer/Platforms/MacOSX.platform/D
 echo "\nnls /Applications/Xcode_16.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib:\n"
 ls /Applications/Xcode_16.2.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib
 
-if [[ "$BUILD_ARCH" == "$BUILD_ARCH_x86" ]]
-then
-    echo "Switch to xcode Xcode_14.3.1"
-    sudo xcode-select -s /Applications/Xcode_14.3.1.app/Contents/Developer
-    sudo mv -f /Applications/Xcode_15.0.1.app /Applications/NO_Xcode_15.0.1.app
-    sudo mv -f /Applications/Xcode_15.0.app /Applications/NO_Xcode_15.0.app
-    sudo mv -f /Applications/Xcode_15.1.0.app Applications/NO_Xcode_15.1.0.app
-    sudo mv -f /Applications/Xcode_15.1.app /Applications/NO_Xcode_15.1.app
-    sudo mv -f /Applications/Xcode_15.2.0.app /Applications/NO_Xcode_15.2.0.app
-    sudo mvv /Applications/Xcode_15.2.app /Applications/NO_Xcode_15.2.app
-fi
+# if [[ "$BUILD_ARCH" == "$BUILD_ARCH_x86" ]]
+# then
+    # echo "Switch to xcode Xcode_14.3.1"
+    # sudo xcode-select -s /Applications/Xcode_14.3.1.app/Contents/Developer
+    # sudo mv -f /Applications/Xcode_15.0.1.app /Applications/NO_Xcode_15.0.1.app
+    # sudo mv -f /Applications/Xcode_15.0.app /Applications/NO_Xcode_15.0.app
+    # sudo mv -f /Applications/Xcode_15.1.0.app Applications/NO_Xcode_15.1.0.app
+    # sudo mv -f /Applications/Xcode_15.1.app /Applications/NO_Xcode_15.1.app
+    # sudo mv -f /Applications/Xcode_15.2.0.app /Applications/NO_Xcode_15.2.0.app
+    # sudo mvv /Applications/Xcode_15.2.app /Applications/NO_Xcode_15.2.app
+# fi
+echo "get ZSDT_PATH"
+ZSDT_PATH=$(ls -v /usr/local/opt/zstd/lib/libzstd.1.*.dylib | tail -n 1)
+echo "get sdk of "$ZSDT_PATH
+tool -show-build $ZSDT_PATH | sed -r 's/.*sdk ([0-9.]*)\..*/\1/g'
+echo "end"
 
 # Iconv: /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/lib/libiconv.tbd
 echo "\nbrew --prefix libiconv:\n"
@@ -255,9 +260,9 @@ then
     # cmake deps
     if [[ "$BUILD_ARCH" == "$BUILD_ARCH_x86" ]]
     then
-        echo "Cmake command: cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET=\"10.13\" ${BUILD_ARCH} "
+        echo "Cmake command: cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET=\"10.14\" ${BUILD_ARCH} "
         pushd deps/build > /dev/null
-        cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET="10.13" $BUILD_ARGS
+        cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" $BUILD_ARGS
     else
         echo "Cmake command: cmake .. -DCMAKE_OSX_DEPLOYMENT_TARGET=\"10.14\" ${BUILD_ARCH} "
         pushd deps/build > /dev/null
@@ -346,7 +351,7 @@ then
     pushd build > /dev/null
     if [[ "$BUILD_ARCH" == "$BUILD_ARCH_x86" ]]
     then
-        cmake .. -DCMAKE_PREFIX_PATH="$PWD/../deps/build/destdir/usr/local" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.13" -DSLIC3R_STATIC=1 ${BUILD_ARGS}
+        cmake .. -DCMAKE_PREFIX_PATH="$PWD/../deps/build/destdir/usr/local" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DSLIC3R_STATIC=1 ${BUILD_ARGS}
     else
         cmake .. -DCMAKE_PREFIX_PATH="$PWD/../deps/build/destdir/usr/local" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DSLIC3R_STATIC=1 ${BUILD_ARGS}
     fi
