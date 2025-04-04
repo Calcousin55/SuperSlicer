@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
+message(STATUS "cmakefile OCCTWrapper")
 project(OCCTWrapper)
 
 if (APPLE)
@@ -50,7 +51,9 @@ set(OCCT_LIBS
     TKernel
 )
 
+message(STATUS "OpenCASCADE_VERSION: '${OpenCASCADE_VERSION}'")
 if (OpenCASCADE_VERSION VERSION_LESS 7.8.0)
+    message(STATUS "OpenCASCADE_VERSION version < 7.8.0, using TKXDESTEP TKSTEP TKSTEP209 TKSTEPAttr TKSTEPBase")
     list(APPEND OCCT_LIBS
             TKXDESTEP
             TKSTEP
@@ -59,6 +62,7 @@ if (OpenCASCADE_VERSION VERSION_LESS 7.8.0)
             TKSTEPBase
     )
 else()
+    message(STATUS "OpenCASCADE_VERSION version >= 7.8.0, using TKDESTEP TKXSDRAWSTEP")
     list(APPEND OCCT_LIBS
             TKDESTEP
             TKXSDRAWSTEP

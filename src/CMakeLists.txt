@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
+message(STATUS "cmakefile src")
 project(Slic3r-native)
 
 add_subdirectory(build-utils)
