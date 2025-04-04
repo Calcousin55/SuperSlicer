@@ -28,6 +28,11 @@ elseif (OpenCASCADE_VERSION VERSION_GREATER_EQUAL 8.0.0)
 endif ()
 
 set(OCCT_LIBS
+    TKXDESTEP
+    TKSTEP
+    TKSTEP209
+    TKSTEPAttr
+    TKSTEPBase
     TKXCAF
     TKXSBase
     TKVCAF
@@ -52,23 +57,8 @@ set(OCCT_LIBS
 )
 
 message(STATUS "OpenCASCADE_VERSION: '${OpenCASCADE_VERSION}'")
-if (OpenCASCADE_VERSION VERSION_LESS 7.8.0)
-    message(STATUS "OpenCASCADE_VERSION version < 7.8.0, using TKXDESTEP TKSTEP TKSTEP209 TKSTEPAttr TKSTEPBase")
-    list(APPEND OCCT_LIBS
-            TKXDESTEP
-            TKSTEP
-            TKSTEP209
-            TKSTEPAttr
-            TKSTEPBase
-    )
-else()
-    message(STATUS "OpenCASCADE_VERSION version >= 7.8.0, using TKDESTEP TKXSDRAWSTEP")
-    list(APPEND OCCT_LIBS
-            TKDESTEP
-            TKXSDRAWSTEP
-    )
-endif()
 
+message(STATUS "OCCT_LIBS: '${OCCT_LIBS}'")
 slic3r_remap_configs("${OCCT_LIBS}" RelWithDebInfo Release)
 
 target_include_directories(OCCTWrapper PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
@@ -77,5 +67,5 @@ target_link_libraries(OCCTWrapper ${OCCT_LIBS})
 
 include(GNUInstallDirs)
 
-install(TARGETS OCCTWrapper DESTINATION "${CMAKE_INSTALL_LIBDIR}/superslicer")
+install(TARGETS OCCTWrapper DESTINATION "${CMAKE_INSTALL_BINDIR}")
 
