@@ -28,45 +28,63 @@ elseif (OpenCASCADE_VERSION VERSION_GREATER_EQUAL 8.0.0)
 endif ()
 
 if (OpenCASCADE_VERSION VERSION_LESS 7.8.0)
-    message(STATUS "OpenCASCADE_VERSION version < 7.8.0, using TKXDESTEP TKSTEP TKSTEP209 TKSTEPAttr TKSTEPBase")
+    message(STATUS "OpenCASCADE_VERSION version < 7.8.0")
     set(OCCT_LIBS
-            TKXDESTEP
-            TKSTEP
-            TKSTEP209
-            TKSTEPAttr
-            TKSTEPBase
+        TKXDESTEP
+        TKSTEP
+        TKSTEP209
+        TKSTEPAttr
+        TKSTEPBase
+        TKXCAF
+        TKXSBase
+        TKVCAF
+        TKCAF
+        TKLCAF
+        TKCDF
+        TKV3d
+        TKService
+        TKMesh
+        TKBO
+        TKPrim
+        TKHLR
+        TKShHealing
+        TKTopAlgo
+        TKGeomAlgo
+        TKBRep
+        TKGeomBase
+        TKG3d
+        TKG2d
+        TKMath
+        TKernel
     )
 else()
-    message(STATUS "OpenCASCADE_VERSION version >= 7.8.0, using TKDESTEP TKXSDRAWSTEP")
+    message(STATUS "OpenCASCADE_VERSION version >= 7.8.0")
     set(OCCT_LIBS
+            TKXCAF
+            TKXSBase
+            TKVCAF
+            TKCAF
+            TKLCAF
+            TKCDF
+            TKV3d
+            TKService
+            TKMesh
+            TKBO
+            TKPrim
+            TKHLR
+            TKShHealing
+            TKTopAlgo
+            TKGeomAlgo
+            TKBRep
+            TKGeomBase
+            TKG3d
+            TKG2d
+            TKMath
+            TKernel
             TKDESTEP
             TKXSDRAWSTEP
     )
 endif()
-
-list(APPEND OCCT_LIB
-    TKXCAF
-    TKXSBase
-    TKVCAF
-    TKCAF
-    TKLCAF
-    TKCDF
-    TKV3d
-    TKService
-    TKMesh
-    TKBO
-    TKPrim
-    TKHLR
-    TKShHealing
-    TKTopAlgo
-    TKGeomAlgo
-    TKBRep
-    TKGeomBase
-    TKG3d
-    TKG2d
-    TKMath
-    TKernel
-)
 
 message(STATUS "OpenCASCADE_VERSION: '${OpenCASCADE_VERSION}'")
 
