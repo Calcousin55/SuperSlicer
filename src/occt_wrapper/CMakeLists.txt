@@ -27,12 +27,24 @@ elseif (OpenCASCADE_VERSION VERSION_GREATER_EQUAL 8.0.0)
     message(FATAL_ERROR "OpenCASCADE v7 >= v7.6.2 must be used")
 endif ()
 
-set(OCCT_LIBS
-    TKXDESTEP
-    TKSTEP
-    TKSTEP209
-    TKSTEPAttr
-    TKSTEPBase
+if (OpenCASCADE_VERSION VERSION_LESS 7.8.0)
+    message(STATUS "OpenCASCADE_VERSION version < 7.8.0, using TKXDESTEP TKSTEP TKSTEP209 TKSTEPAttr TKSTEPBase")
+    set(OCCT_LIBS
+            TKXDESTEP
+            TKSTEP
+            TKSTEP209
+            TKSTEPAttr
+            TKSTEPBase
+    )
+else()
+    message(STATUS "OpenCASCADE_VERSION version >= 7.8.0, using TKDESTEP TKXSDRAWSTEP")
+    set(OCCT_LIBS
+            TKDESTEP
+            TKXSDRAWSTEP
+    )
+endif()
+
+list(APPEND OCCT_LIB
     TKXCAF
     TKXSBase
     TKVCAF
