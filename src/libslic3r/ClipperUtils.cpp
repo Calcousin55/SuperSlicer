@@ -265,6 +265,16 @@ static ExPolygons PolyTreeToExPolygons(ClipperLib::PolyTree &&polytree)
                 (*expolygons).pop_back();
                 return;
             }
+            // 3 points and two are too close
+            if ((*expolygons)[cnt].contour.size() < 4) {
+                if ((*expolygons)[cnt].contour[0].coincides_with_epsilon((*expolygons)[cnt].contour[2]) ||
+                    (*expolygons)[cnt].contour[0].coincides_with_epsilon((*expolygons)[cnt].contour[1]) ||
+                    (*expolygons)[cnt].contour[1].coincides_with_epsilon((*expolygons)[cnt].contour[2])) {
+                    // error, delete.
+                    (*expolygons).pop_back();
+                    return;
+                }
+            }
             assert((*expolygons)[cnt].contour.is_counter_clockwise());
             (*expolygons)[cnt].holes.resize(polynode.ChildCount());
             for (int i = 0; i < polynode.ChildCount(); ++ i) {
@@ -1518,7 +1528,7 @@ ExPolygons simplify_polygons_ex(const Polygons &subject, bool preserve_collinear
 
     ClipperLib::PolyTree polytree;
     ClipperLib::Clipper c;
-//    c.PreserveCollinear(true);
+    if (preserve_collinear) c.PreserveCollinear(preserve_collinear);
     //FIXME StrictlySimple is very expensive! Is it needed?
     c.StrictlySimple(true);
     c.AddPaths(ClipperUtils::PolygonsProvider(subject), ClipperLib::ptSubject, true);
